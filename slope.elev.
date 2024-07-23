@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องคำนวณระดับที่ห่างออกจากจุดอ้างอิง</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        label, input {
+            display: block;
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>เครื่องคำนวณระดับที่ห่างออกจากจุดอ้างอิง</h1>
+    <label for="referencePoint">ระดับจุดอ้างอิง:</label>
+    <input type="number" id="referencePoint" step="any">
+
+    <label for="distance">ระยะทาง (เมตร):</label>
+    <input type="number" id="distance" step="any">
+
+    <label for="slopePercent">ความลาดเอียง (%):</label>
+    <input type="number" id="slopePercent" step="any">
+
+    <label for="slopeDirection">เลือกทิศทางความลาด:</label>
+    <select id="slopeDirection">
+        <option value="positive">บวก</option>
+        <option value="negative">ลบ</option>
+    </select>
+
+    <button onclick="calculateLevel()">คำนวณ</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function calculateLevel() {
+            const referencePoint = parseFloat(document.getElementById('referencePoint').value);
+            const distance = parseFloat(document.getElementById('distance').value);
+            const slopePercent = parseFloat(document.getElementById('slopePercent').value);
+            const slopeDirection = document.getElementById('slopeDirection').value;
+
+            // คำนวณการเพิ่มหรือลดระดับจากความลาดเอียง
+            const slopeChange = (slopePercent / 100) * distance;
+            let result;
+
+            if (slopeDirection === 'positive') {
+                result = referencePoint + slopeChange;
+            } else if (slopeDirection === 'negative') {
+                result = referencePoint - slopeChange;
+            }
+
+            document.getElementById('result').innerHTML = `ระดับที่ห่างออกจากจุดอ้างอิง: ${result.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
